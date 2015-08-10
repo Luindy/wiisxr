@@ -89,12 +89,12 @@ enum frameSkip
 	FRAMESKIP_ENABLE,
 };
 
-extern int iUseDither;
-enum iUseDither
+extern BOOL bDrawDither;
+enum bDrawDither
 {
-	USEDITHER_NONE=0,
-	USEDITHER_DEFAULT,
-	USEDITHER_ALWAYS
+	USEDITHER_NONE=FALSE,
+	USEDITHER_DEFAULT=FALSE,
+	USEDITHER_ALWAYS=TRUE
 };
 
 extern char saveEnabled;	//???

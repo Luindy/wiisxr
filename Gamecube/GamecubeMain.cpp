@@ -186,7 +186,7 @@ void loadSettings(int argc, char *argv[])
 	printToSD        = 0; // Disable SD logging
 	frameLimit		 = 1; // Auto limit FPS
 	frameSkip		 = 0; // Disable frame skipping
-	iUseDither		 = 1; // Default dithering
+	bDrawDither		 = FALSE; // Default dithering
 	saveEnabled      = 0; // Don't save game
 	nativeSaveDevice = 0; // SD
 	saveStateDevice	 = 0; // SD

@@ -1,3 +1,13 @@
+#THIS IS AN EXPERIMENTAL BRANCH
+
+I'm looking to see if I can import the openGL plugin from pcsxr.
+
+A lot of X11 code needs to be removed or adapted to work on the Wii. I'm not looking to make this compatible with Gamecube.
+
+Note that this port useds gl2gx. Grab the latest source here (compile and place in libogc folder):
+
+https://github.com/Mystro256/gl2gx
+
 # WiiSXR
 Fork of wiisx, a GameCube/Wii/Wii U PSX emulator.
 
