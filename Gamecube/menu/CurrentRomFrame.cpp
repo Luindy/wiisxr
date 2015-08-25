@@ -50,9 +50,11 @@ void Func_SaveGame();
 void Func_LoadState();
 void Func_SaveState();
 void Func_StateCycle();
+void Func_MemCard1Cycle();
+void Func_MemCard2Cycle();
 void Func_ReturnFromCurrentRomFrame();
 
-#define NUM_FRAME_BUTTONS 8
+#define NUM_FRAME_BUTTONS 10
 #define FRAME_BUTTONS currentRomFrameButtons
 #define FRAME_STRINGS currentRomFrameStrings
 
@@ -62,9 +64,10 @@ void Func_ReturnFromCurrentRomFrame();
  * [Show ISO Info]
  * [Load State] [Slot "x"]
  * [Save State]
+ * [MC1 Slot 0][MC2 Slot 0]
  */
 
-static char FRAME_STRINGS[8][15] =
+static char FRAME_STRINGS[10][15] =
 	{ "Restart Game",
 	  "Swap CD",
 	  "Load MemCards",
@@ -72,7 +75,9 @@ static char FRAME_STRINGS[8][15] =
 	  "Show ISO Info",
 	  "Load State",
 	  "Save State",
-	  "Slot 0"};
+	  "Slot 0",
+	  "MC1 Slot 0",
+	  "MC2 Slot 0"};
 
 struct ButtonInfo
 {
@@ -99,6 +104,8 @@ struct ButtonInfo
 	{	NULL,	BTN_A_NRM,	FRAME_STRINGS[5],	150.0,	240.0,	220.0,	56.0,	 4,	 6,	 7,	 7,	Func_LoadState,		Func_ReturnFromCurrentRomFrame }, // Load State 
 	{	NULL,	BTN_A_NRM,	FRAME_STRINGS[6],	150.0,	300.0,	220.0,	56.0,	 5,	 0,	 7,	 7,	Func_SaveState,		Func_ReturnFromCurrentRomFrame }, // Save State 
 	{	NULL,	BTN_A_NRM,	FRAME_STRINGS[7],	390.0,	270.0,	100.0,	56.0,	 4,	 1,	 5,	 5,	Func_StateCycle,	Func_ReturnFromCurrentRomFrame }, // Cycle State 
+	{	NULL,	BTN_A_NRM,	FRAME_STRINGS[8],	100.0,	380.0,	210.0,	56.0,	 3,  	 0,  	 6, 	 4, 	Func_MemCard1Cycle, 	Func_ReturnFromCurrentRomFrame }, // MemCards 1 and 2 slots
+	{	NULL,	BTN_A_NRM,	FRAME_STRINGS[9],	330.0,	380.0,	210.0,	56.0,	 2,	 9,	 6,	 3,	Func_MemCard2Cycle,	Func_ReturnFromCurrentRomFrame }, 
 };
 
 CurrentRomFrame::CurrentRomFrame()
@@ -202,6 +209,8 @@ extern "C" char mcd2Written;
 extern "C" int LoadState();
 extern "C" int SaveState();
 extern "C" void savestates_select_slot(unsigned int s);
+extern "C" void memcard1_select_slot(unsigned int s); // See too sio.c, save as the folder "/wiisx/memcards/"
+extern "C" void memcard2_select_slot(unsigned int s);
 
 void Func_LoadSave()
 {
@@ -347,6 +356,20 @@ void Func_StateCycle()
 	savestates_select_slot(which_slot);
 	FRAME_STRINGS[7][5] = which_slot + '0';
 
+}
+
+void Func_MemCard1Cycle() //Slots to MCs, MCx SLOT x (x = 0 to 9)
+{
+	which_slot = (which_slot+1) %10;
+	memcard1_select_slot(which_slot);
+	FRAME_STRINGS[8][9] = which_slot + '0';
+}
+
+void Func_MemCard2Cycle()
+{
+	which_slot = (which_slot+1) %10;
+	memcard2_select_slot(which_slot);
+	FRAME_STRINGS[9][9] = which_slot + '0';
 }
 
 void Func_ReturnFromCurrentRomFrame()
