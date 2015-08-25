@@ -45,6 +45,7 @@ static unsigned int mcdst,rdwr;
 static unsigned char adrH,adrL;
 static unsigned int padst;
 
+char* savepath = "/wiisx/memcards/"; // memorycards folder, see too "CurrentRomFrame.cpp"
 char mcd1Written = 0;
 char mcd2Written = 0;
 
@@ -324,6 +325,25 @@ void sioInterrupt() {
 }
 
 //call me from menu, takes slot and save path as args
+static unsigned int memcard1_slot = 0; // see too "CurrentRomFrame.cpp"
+static unsigned int memcard2_slot = 0;
+
+void memcard1_select_slot(unsigned int s) //MC1/2 and slot 1 and 2 individual(0 to 9)
+{
+   if (s > 9) {
+     return;
+   }
+   memcard1_slot = s;
+}
+
+void memcard2_select_slot(unsigned int s)
+{
+   if (s > 9) {
+     return;
+   }
+   memcard2_slot = s;
+}
+
 int LoadMcd(int mcd, fileBrowser_file *savepath) {
 	int temp = 0;
 	bool ret = 0;
@@ -333,11 +353,11 @@ int LoadMcd(int mcd, fileBrowser_file *savepath) {
 	memset(&saveFile.name[0],0,FILE_BROWSER_MAX_PATH_LEN);
 	
 	if(mcd == 1) {
-	  sprintf((char*)saveFile.name,"%s/%s.mcd",savepath->name,CdromId);
+	  sprintf((char*)saveFile.name,"%s/MemoryCard01-Slot%d.mcr",savepath->name, memcard1_slot); // original line: saveFile.name,"%s/%s.mcr",savepath->name,CdromId);
 	  data = &Mcd1Data[0];
   }
 	if (mcd == 2) {
-  	sprintf((char*)saveFile.name,"%s/slot2.mcd",savepath->name);
+  	sprintf((char*)saveFile.name,"%s/MemoryCard02-Slot%d.mcr",savepath->name, memcard2_slot); // original line: saveFile.name,"%s/slot2.mcr",savepath->name);
   	data = &Mcd2Data[0];
 	}
 
@@ -373,11 +393,11 @@ int SaveMcd(int mcd, fileBrowser_file *savepath) {
 	memset(&saveFile.name[0],0,FILE_BROWSER_MAX_PATH_LEN);
 	
 	if(mcd == 1) {
-	  sprintf((char*)saveFile.name,"%s/%s.mcd",savepath->name,CdromId);
+	  sprintf((char*)saveFile.name,"%s/MemoryCard01-Slot%d.mcr",savepath->name, memcard1_slot); //original line: "%s/%s.mcd",savepath->name,CdromId);
 	  data = &Mcd1Data[0];
   }
 	if (mcd == 2) {
-  	sprintf((char*)saveFile.name,"%s/slot2.mcd",savepath->name);
+  	sprintf((char*)saveFile.name,"%s/MemoryCard02-Slot%d.mcr",savepath->name, memcard2_slot); //original line: "%s/slot2.mcd",savepath->name,CdromId);
   	data = &Mcd2Data[0];
 	}
 	
