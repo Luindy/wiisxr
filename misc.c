@@ -414,7 +414,7 @@ int Load(fileBrowser_file *exe) {
 // STATES
 void LoadingBar_showBar(float percent, const char* string);
 const char PcsxHeader[32] = "STv3 PCSX v";
-char* statespath = "/wiisx/saves/";
+char* statespath = "/wiisx/sstates/"; //save state folder, original line = "/wiisx/saves/"
 static unsigned int savestates_slot = 0;
 extern unsigned char  *psxVub;
 extern unsigned short  spuMem[256*1024];
