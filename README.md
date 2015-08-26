@@ -24,6 +24,7 @@ I'll try to keep the latest working build in the Gamecube folder. Please note th
 Here's the link, just replace your current boot.dol file in the apps/wiisx folder (i'll get a better download going later on):
 
 https://github.com/Mystro256/wiisxr/raw/master/Gamecube/WiiSX.dol
+**Create this folder on wiisx: "x:/wiisx/memcards" and "x:/wiisx/sstates"
 
 ##Reporting Bugs
 
